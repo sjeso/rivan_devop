@@ -41,11 +41,11 @@ R1#
 
 @@@@@@@ example3 @@@@@@@@@
 
-A user executed script that prompts you for a number of loopbacks to create.
+A user executed script that prompts you for a number of loopbacks to create. orig cisco
 
 config t
-no event manager applet gawaloop
-event manager applet gawaloop
+no event manager applet makeloop
+event manager applet makeloop
  event none
  action 1.0 puts "How many Loopback interfaces do you wish to create?"
  action 1.1 puts nonewline "> "
@@ -58,17 +58,18 @@ event manager applet gawaloop
  action 3.3  cli command "ip address $i.$i.$i.$i 255.255.255.255"
  action 3.4  increment i 1
  action 3.5 end
+ action 3.6 cli command "show ip int br | inc loop"
  action 4.0 cli command "end"
  end
 
 event manager run CreateLoopbacks
 
-removing loopbacks:
+removing loopbacks: on orif cisco
 config t
-no event manager applet siraloop
-event manager applet siraloop
+no event manager applet deleteloop
+event manager applet deleteloop
  event none
- action 1.0 puts "How many Loopback interfaces do you wish to create?"
+ action 1.0 puts "How many Loopback interfaces do you wish to remove?"
  action 1.1 puts nonewline "> "
  action 1.2 gets num 
  action 2.0 cli command "enable"
